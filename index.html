@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leo's VA Contractor Exam Prep</title>
+<style>
+  :root{
+    --navy:#13344a; --navy2:#1c4a66; --teal:#2bb0c4; --green:#36b37e;
+    --red:#e23b4d; --amber:#f0a830; --bg:#f4f6f8; --card:#ffffff;
+    --ink:#13344a; --muted:#5b7185; --line:#e3e9ee;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;}
+  .wrap{max-width:720px;margin:0 auto;padding:16px;}
+  header.top{background:var(--navy);color:#fff;padding:18px 16px;text-align:center;}
+  header.top h1{margin:0;font-size:20px;letter-spacing:.2px;}
+  header.top p{margin:4px 0 0;font-size:13px;opacity:.85;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0;
+    box-shadow:0 1px 3px rgba(19,52,74,.06);}
+  .section-title{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:18px 4px 6px;font-weight:700;}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;color:#fff;}
+  .pill.va{background:var(--navy2);}
+  .pill.adv{background:var(--teal);}
+  .topic{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:8px 0;cursor:pointer;
+    font-size:15px;font-weight:600;color:var(--ink);transition:.15s;}
+  .topic:hover{border-color:var(--teal);transform:translateY(-1px);box-shadow:0 3px 10px rgba(19,52,74,.08);}
+  .topic .meta{font-size:12px;color:var(--muted);font-weight:500;}
+  .topic .chev{color:var(--teal);font-size:18px;}
+  .btn{display:inline-block;border:none;border-radius:10px;padding:13px 18px;font-size:15px;font-weight:700;
+    cursor:pointer;transition:.15s;width:100%;}
+  .btn.primary{background:var(--teal);color:#fff;}
+  .btn.primary:hover{background:#229cb0;}
+  .btn.ghost{background:#eef3f6;color:var(--navy);}
+  .btn.ghost:hover{background:#e1eaef;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+  .row{display:flex;gap:10px;}
+  .progress{height:8px;background:#e6edf1;border-radius:20px;overflow:hidden;margin:6px 0 14px;}
+  .progress > i{display:block;height:100%;background:var(--teal);width:0;transition:width .3s;}
+  .qmeta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-bottom:6px;}
+  .qtext{font-size:17px;font-weight:600;margin:6px 0 16px;}
+  .opt{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:11px;
+    padding:13px 15px;margin:9px 0;font-size:15px;cursor:pointer;transition:.12s;color:var(--ink);}
+  .opt:hover{border-color:var(--teal);}
+  .opt .lab{display:inline-block;font-weight:700;color:var(--muted);margin-right:8px;}
+  .opt.correct{border-color:var(--green);background:#eafaf2;}
+  .opt.wrong{border-color:var(--red);background:#fdeced;}
+  .opt.dim{opacity:.55;}
+  .opt:disabled{cursor:default;}
+  .feedback{border-radius:11px;padding:13px 15px;margin:12px 0;font-size:14px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:#eafaf2;border:1px solid #b7e6cf;}
+  .feedback.no{background:#fdeced;border:1px solid #f3c0c6;}
+  .feedback .head{font-weight:700;margin-bottom:4px;}
+  .feedback .ref{margin-top:8px;font-size:12.5px;color:var(--navy2);background:#fff;border-radius:8px;padding:8px 10px;border:1px dashed #c7d6df;}
+  .ref b{color:var(--navy);}
+  .scorebig{font-size:46px;font-weight:800;text-align:center;margin:6px 0;}
+  .scoresub{text-align:center;color:var(--muted);margin-bottom:14px;}
+  .verdict{text-align:center;font-weight:800;font-size:18px;padding:10px;border-radius:10px;margin-bottom:14px;}
+  .verdict.pass{background:#eafaf2;color:var(--green);}
+  .verdict.fail{background:#fdeced;color:var(--red);}
+  .reviewq{border-top:1px solid var(--line);padding:12px 0;font-size:14px;}
+  .reviewq .qq{font-weight:600;}
+  .reviewq .yours{color:var(--red);}
+  .reviewq .right{color:var(--green);}
+  .hide{display:none;}
+  footer{text-align:center;font-size:11.5px;color:var(--muted);padding:20px;}
+  .badge{font-size:11px;color:var(--muted);}
+  .stat{display:flex;gap:14px;justify-content:center;margin:10px 0;}
+  .stat div{text-align:center;}
+  .stat b{display:block;font-size:22px;color:var(--navy);}
+  .stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>VA Contractor Exam Prep</h1>
+  <p>Class A / B &middot; Virginia &amp; Advanced sections</p>
+</header>
+
+<div class="wrap">
+
+  <!-- HOME -->
+  <div id="home">
+    <div class="card" style="text-align:center;">
+      <p style="margin:0 0 4px;font-weight:600;">Hey Leo &mdash; let's pass the two you missed.</p>
+      <p class="badge" style="margin:0;">Pick a topic to drill, or run a full mock section. Each answer shows you exactly where to find it in your book.</p>
+    </div>
+
+    <div class="row" style="margin:12px 0;">
+      <button class="btn primary" onclick="start('VA')">Mock: Virginia Section</button>
+      <button class="btn primary" onclick="start('ADV')">Mock: Advanced Section</button>
+    </div>
+
+    <div class="section-title"><span class="pill va">FAILED &middot; 58%</span> &nbsp;Virginia (Class A or B)</div>
+    <div id="vaTopics"></div>
+
+    <div class="section-title"><span class="pill adv">FAILED &middot; 54%</span> &nbsp;Advanced (Class A Mandatory)</div>
+    <div id="advTopics"></div>
+
+    <footer>
+      Reference key: <b>NASCLA 11th ed.</b> = NASCLA Contractor's Guide to Business, Law &amp; Project Management, 11th Edition &middot;
+      <b>VCC 2018</b> = 2018 Virginia Construction Code (USBC Part I) &middot;
+      <b>18VAC50-22</b> = Board for Contractors Regulations &middot;
+      Citations point you to the section, not a page number, since pages shift between printings.
+    </footer>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="hide">
+    <div class="card">
+      <div class="qmeta">
+        <span id="qLabel"></span>
+        <span id="qCount"></span>
+      </div>
+      <div class="progress"><i id="qBar"></i></div>
+      <div class="qtext" id="qText"></div>
+      <div id="qOpts"></div>
+      <div class="feedback" id="qFeed">
+        <div class="head" id="qFeedHead"></div>
+        <div id="qFeedExpl"></div>
+        <div class="ref" id="qFeedRef"></div>
+      </div>
+      <button class="btn primary hide" id="qNext" onclick="next()">Next</button>
+    </div>
+    <button class="btn ghost" onclick="goHome()">Quit to menu</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="hide">
+    <div class="card">
+      <div class="scorebig" id="rPct"></div>
+      <div class="scoresub" id="rRaw"></div>
+      <div class="verdict" id="rVerdict"></div>
+      <div class="stat">
+        <div><b id="rRight"></b><span>Correct</span></div>
+        <div><b id="rWrong"></b><span>Missed</span></div>
+        <div><b id="rTotal"></b><span>Total</span></div>
+      </div>
+      <button class="btn primary" onclick="retry()">Try this set again</button>
+      <div style="height:8px;"></div>
+      <button class="btn ghost" onclick="goHome()">Back to menu</button>
+    </div>
+    <div class="card">
+      <div class="section-title" style="margin-top:0;">Review your misses</div>
+      <div id="rReview"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK
+   Each: q, options[4], answer (index), expl, ref
+   ============================================================ */
+const BANK = {
+  VA: {
+    label: "Virginia (Class A or B)",
+    topics: {
+      "Regulation of Contractors": [
+        {q:"At what dollar amount of a single contract does Virginia require a contractor to be licensed?",
+         options:["$500 or more","$1,000 or more","$2,500 or more","$10,000 or more"],answer:1,
+         expl:"A contractor license is required for any single project valued at $1,000 or more (labor and materials combined).",
+         ref:"Code of VA § 54.1-1100; 18VAC50-22"},
+        {q:"Which license class is required for a single project valued at $120,000 or more, or $750,000+ of total work in a year?",
+         options:["Class A","Class B","Class C","Specialty only"],answer:0,
+         expl:"Class A has no monetary limits and is required at the highest thresholds: $120,000+ single project or $750,000+ annually.",
+         ref:"Code of VA § 54.1-1100; 18VAC50-22-20"},
+        {q:"A Class B contractor may perform single projects in what value range?",
+         options:["Up to $1,000","$1,000 to under $10,000","$10,000 to under $120,000","$120,000 and up"],answer:2,
+         expl:"Class B covers single projects from $10,000 up to (but not including) $120,000, and annual work from $150,000 up to $750,000.",
+         ref:"Code of VA § 54.1-1100; 18VAC50-22-20"},
+        {q:"The Board for Contractors operates under which Virginia agency?",
+         options:["Dept. of Labor and Industry","Dept. of Professional and Occupational Regulation (DPOR)","Dept. of Housing and Community Development","State Corporation Commission"],answer:1,
+         expl:"The Board for Contractors is one of the regulatory boards within DPOR.",
+         ref:"Code of VA Title 54.1, Ch. 11"},
+        {q:"How long is a Virginia contractor license valid before it must be renewed?",
+         options:["1 year","2 years","3 years","5 years"],answer:1,
+         expl:"Contractor licenses are issued for a two-year cycle and must be renewed before expiration.",
+         ref:"18VAC50-22-140"},
+        {q:"The 'qualified individual' for a contractor firm must primarily demonstrate what?",
+         options:["Personal net worth of $100,000","Passing the required Board exam and relevant experience","Ownership of at least 51% of the firm","A bachelor's degree in construction"],answer:1,
+         expl:"The qualified individual is the person who has met the experience requirement and passed the trade/exam requirement on behalf of the firm.",
+         ref:"18VAC50-22-220"},
+        {q:"For a Class A or B firm, the 'designated employee' is best described as:",
+         options:["Any part-time worker","A full-time employee or officer who is the firm's responsible point of contact with the Board","The lowest-paid laborer","An outside accountant"],answer:1,
+         expl:"The designated employee is a full-time employee, member, or officer who supervises and is responsible for the firm's regulatory compliance.",
+         ref:"18VAC50-22-10 (definitions)"},
+        {q:"Which best describes a 'contractor' under Virginia law?",
+         options:["Only someone who builds new homes","Any person or firm that for compensation undertakes to build, repair, improve, or remove a structure","Only licensed electricians and plumbers","A material supplier only"],answer:1,
+         expl:"The statutory definition is broad: anyone who, for pay, constructs, repairs, improves, removes, or demolishes improvements to real property.",
+         ref:"Code of VA § 54.1-1100"},
+        {q:"Engaging in contracting without a required license (first offense) is generally a:",
+         options:["Civil warning only","Class 1 misdemeanor","Class 6 felony","No penalty"],answer:1,
+         expl:"A first offense for unlicensed contracting is a Class 1 misdemeanor; subsequent offenses can rise to a Class 6 felony.",
+         ref:"Code of VA § 54.1-111"},
+        {q:"A Class C contractor is limited to single projects of what maximum value?",
+         options:["Under $10,000","Under $25,000","Under $50,000","Under $120,000"],answer:0,
+         expl:"Class C covers single projects from $1,000 up to under $10,000, with annual work under $150,000.",
+         ref:"Code of VA § 54.1-1100; 18VAC50-22-20"}
+      ],
+      "Board Rules and Regulations": [
+        {q:"A licensee must report a change of name or address to the Board within how many days?",
+         options:["10 days","30 days","60 days","90 days"],answer:1,
+         expl:"Changes of name, address, or other material information must be reported to the Board within 30 days.",
+         ref:"18VAC50-22-60"},
+        {q:"What is the minimum net worth or equity required for a Class A license?",
+         options:["No requirement","$15,000","$45,000","$100,000"],answer:2,
+         expl:"Class A firms must show a minimum net worth or equity of $45,000 (Class B is $15,000; Class C has none).",
+         ref:"18VAC50-22-40"},
+        {q:"The minimum years of experience a qualified individual needs for a Class A license is:",
+         options:["2 years","3 years","5 years","10 years"],answer:2,
+         expl:"Class A requires 5 years of experience; Class B requires 3 years; Class C requires 2 years.",
+         ref:"18VAC50-22-220"},
+        {q:"What is the minimum net worth requirement for a Class B license?",
+         options:["None","$15,000","$45,000","$75,000"],answer:1,
+         expl:"Class B firms must demonstrate a minimum net worth or equity of $15,000.",
+         ref:"18VAC50-22-50"},
+        {q:"Which of the following is grounds for the Board to discipline a licensee?",
+         options:["Hiring too many employees","Negligence or misconduct in the practice of contracting","Bidding low on a job","Working in more than one county"],answer:1,
+         expl:"Improper or dishonest conduct, negligence, and misconduct in contracting are all grounds for disciplinary action.",
+         ref:"18VAC50-22-260 (prohibited acts)"},
+        {q:"A Class C contractor's net worth requirement is:",
+         options:["$45,000","$15,000","$5,000","No net worth requirement"],answer:3,
+         expl:"There is no minimum net worth requirement for a Class C license.",
+         ref:"18VAC50-22"},
+        {q:"Each contractor firm must maintain what for Board compliance?",
+         options:["A responsible/designated person and accurate records","A company vehicle","Membership in a trade union","An office in Richmond"],answer:0,
+         expl:"Firms must have responsible management/a designated employee and keep records demonstrating compliance.",
+         ref:"18VAC50-22-10; 18VAC50-22-60"},
+        {q:"To qualify for a class of license, the firm must also have an individual who has passed:",
+         options:["A driving test","The Board's trade-related and/or business exam for that class","A physical exam","A credit check only"],answer:1,
+         expl:"A qualified individual must pass the applicable examination requirement for the license class.",
+         ref:"18VAC50-22-220"},
+        {q:"Operating under a name different from the one on the license without notifying the Board is:",
+         options:["Always allowed","A prohibited act / grounds for discipline","Required by law","Only an issue for Class C"],answer:1,
+         expl:"Using an unreported or unauthorized name is a prohibited act and a reporting violation.",
+         ref:"18VAC50-22-260"},
+        {q:"When a firm cannot meet the net worth requirement, it may instead provide:",
+         options:["A larger advertisement","A surety bond in the amount set by the Board","A letter from a customer","Nothing; it cannot be licensed"],answer:1,
+         expl:"A firm short on net worth can post a surety bond (in the Board-set amount) to satisfy the financial requirement.",
+         ref:"18VAC50-22-40 / -50"}
+      ],
+      "Building Codes": [
+        {q:"The Virginia Construction Code (USBC Part I) is primarily based on which model code?",
+         options:["NEC","International Building Code (IBC)","ASME code","Local county code"],answer:1,
+         expl:"The VCC adopts and amends the International Building Code family of model codes.",
+         ref:"VCC 2018, Ch. 1 Administration"},
+        {q:"Before most construction can legally begin, the contractor must obtain a:",
+         options:["Business card","Building permit","Newspaper ad","Bank loan"],answer:1,
+         expl:"A building permit must be obtained from the local building official before construction starts.",
+         ref:"VCC 2018, § 108 Permits"},
+        {q:"A building generally may not be occupied until issuance of a:",
+         options:["Certificate of occupancy","Business license","Mechanic's lien","Surety bond"],answer:0,
+         expl:"A certificate of occupancy (CO) is required before a new building or change of use may be occupied.",
+         ref:"VCC 2018, § 116 Certificate of Occupancy"},
+        {q:"Who has the authority to enforce the USBC and conduct inspections locally?",
+         options:["The contractor","The building official / code official","The homeowner","The supplier"],answer:1,
+         expl:"The local building (code) official administers and enforces the code, including inspections.",
+         ref:"VCC 2018, § 104 Building Official"},
+        {q:"In residential stairs, the maximum riser height is generally:",
+         options:["6 inches","7 inches","7-3/4 inches","9 inches"],answer:2,
+         expl:"Code limits residential stair risers to a maximum of 7-3/4 inches, with a minimum tread depth of 10 inches.",
+         ref:"VCC/IRC 2018, Means of Egress – Stairways"},
+        {q:"Required guards (guardrails) at open sides of residential floors must generally be at least:",
+         options:["30 inches high","34 inches high","36 inches high","42 inches high"],answer:2,
+         expl:"Residential guards are a minimum of 36 inches high; commercial guards are typically 42 inches.",
+         ref:"VCC/IRC 2018, Guards"},
+        {q:"Footings are typically required to extend below what depth to resist frost heave?",
+         options:["Above grade","Below the local frost line","Exactly 6 inches deep","At the surface"],answer:1,
+         expl:"Footings must bear below the frost line depth established for the locality to prevent frost heave.",
+         ref:"VCC/IRC 2018, Foundations – Frost Protection"},
+        {q:"The code requires what life-safety device in each sleeping room of a dwelling?",
+         options:["Fire sprinkler in every closet","Smoke alarm","Carbon paper","A second window only"],answer:1,
+         expl:"Smoke alarms are required in each sleeping room, outside sleeping areas, and on each level.",
+         ref:"VCC/IRC 2018, Smoke Alarms"},
+        {q:"A required means of egress provides:",
+         options:["A continuous, unobstructed path to a public way","A place to store materials","Extra parking","A drainage route"],answer:0,
+         expl:"Means of egress must be a continuous and unobstructed path of travel from any point in a building to a public way.",
+         ref:"VCC 2018, Ch. 10 Means of Egress"},
+        {q:"When work covered by a permit will be concealed (e.g., framing, wiring), the contractor must:",
+         options:["Cover it immediately","Schedule the required inspection before concealing it","Skip inspection if confident","Only photograph it"],answer:1,
+         expl:"Required inspections must be performed and approved before the work is covered or concealed.",
+         ref:"VCC 2018, § 113 Inspections"}
+      ],
+      "Transaction Recovery Fund": [
+        {q:"What is the main purpose of the Virginia Contractor Transaction Recovery Fund?",
+         options:["To pay contractor salaries","To reimburse consumers for certain losses caused by a licensed contractor's improper or dishonest conduct","To fund the Board's advertising","To insure contractor tools"],answer:1,
+         expl:"The Fund reimburses eligible consumers who suffer losses due to improper or dishonest conduct by a licensed (regulated) contractor.",
+         ref:"Code of VA § 54.1-1118 et seq."},
+        {q:"Before recovering from the Fund, a claimant generally must first obtain:",
+         options:["A police report","An unsatisfied court judgment against the licensed contractor","A new contractor","A building permit"],answer:1,
+         expl:"The claimant must have a judgment that remains unsatisfied after reasonable collection efforts.",
+         ref:"Code of VA § 54.1-1120"},
+        {q:"The maximum amount payable from the Fund for a single transaction is:",
+         options:["$5,000","$10,000","$20,000","$40,000"],answer:2,
+         expl:"The Fund pays a maximum of $20,000 per transaction.",
+         ref:"Code of VA § 54.1-1123"},
+        {q:"The maximum aggregate amount the Fund will pay for claims against a single licensee is:",
+         options:["$20,000","$40,000","$100,000","No limit"],answer:1,
+         expl:"Total payments against any one regulant (licensee) are capped at $40,000.",
+         ref:"Code of VA § 54.1-1123"},
+        {q:"Who is eligible to file a claim against the Fund?",
+         options:["Another contractor owed money","A consumer who contracted with the licensee for work on their property","A material supplier","An employee owed wages"],answer:1,
+         expl:"Eligibility is limited to consumers; other contractors, suppliers, and employees generally cannot recover from the Fund.",
+         ref:"Code of VA § 54.1-1118 (definitions)"},
+        {q:"The Fund is financed by:",
+         options:["State income taxes","Assessments paid by licensed contractors","Federal grants","Building permit fees"],answer:1,
+         expl:"The Fund is supported by assessments charged to licensees, not general tax revenue.",
+         ref:"Code of VA § 54.1-1119"},
+        {q:"If the Fund pays a claim caused by a contractor, the Board may:",
+         options:["Do nothing","Automatically revoke the license until the Fund is repaid","Give the contractor a bonus","Increase the contractor's limits"],answer:1,
+         expl:"The licensee's license is revoked and remains so until the licensee fully reimburses the Fund (with interest).",
+         ref:"Code of VA § 54.1-1124"},
+        {q:"A claim against the Fund must generally be filed within what time after the judgment becomes final?",
+         options:["12 months","5 years","No time limit","30 days"],answer:0,
+         expl:"Claimants generally must file within 12 months of the judgment becoming final.",
+         ref:"Code of VA § 54.1-1120"},
+        {q:"The judgment supporting a Fund claim must be against a contractor who was:",
+         options:["Unlicensed","Licensed (a regulant) at the time of the transaction","From another state","A subcontractor only"],answer:1,
+         expl:"The Fund only covers losses caused by licensed regulants; losses from unlicensed contractors are not recoverable from the Fund.",
+         ref:"Code of VA § 54.1-1118"},
+        {q:"Before the Fund pays, the claimant must show they:",
+         options:["Made reasonable efforts to collect on the judgment","Hired a lawyer","Filed a complaint with police","Re-did the work themselves"],answer:0,
+         expl:"The claimant must demonstrate reasonable efforts to collect the judgment from the contractor's assets first.",
+         ref:"Code of VA § 54.1-1120"}
+      ],
+      "Virginia Erosion and Sediment Control Regulations": [
+        {q:"In most of Virginia, an approved erosion & sediment control plan is required when land disturbance equals or exceeds:",
+         options:["2,500 sq ft","10,000 sq ft","1 acre","43,560 sq ft"],answer:1,
+         expl:"The general threshold is 10,000 square feet (2,500 sq ft within designated Chesapeake Bay Preservation Areas).",
+         ref:"VA Erosion & Sediment Control Law/Regs; VESCH"},
+        {q:"The main goal of erosion and sediment control is to:",
+         options:["Speed up construction","Reduce soil erosion and keep sediment out of waterways","Lower material costs","Increase land value"],answer:1,
+         expl:"E&S control protects water quality by minimizing soil erosion and preventing sediment from reaching streams and storm systems.",
+         ref:"VESCH – Purpose"},
+        {q:"A 'Responsible Land Disturber' (RLD) is required to:",
+         options:["Pour all concrete","Be identified to oversee E&S compliance on the site","Sell the property","Inspect electrical work"],answer:1,
+         expl:"A certified RLD must be designated to be responsible for carrying out the approved E&S plan on the project.",
+         ref:"VA E&S Control Law"},
+        {q:"A silt fence is primarily used to:",
+         options:["Mark property lines","Trap sediment carried by sheet flow runoff","Support scaffolding","Provide site security"],answer:1,
+         expl:"Silt fence is a perimeter control that filters and ponds sheet-flow runoff so sediment drops out before leaving the site.",
+         ref:"VESCH – Std. 3.05 Silt Fence"},
+        {q:"Denuded (bare) areas that will be left idle must generally be stabilized within:",
+         options:["7 days","30 days","60 days","No requirement"],answer:0,
+         expl:"Minimum standards require temporary or permanent stabilization of disturbed areas, generally within 7 days of reaching final grade or when work pauses.",
+         ref:"VESCH – Minimum Standard 1"},
+        {q:"A stabilized construction entrance is installed to:",
+         options:["Reduce mud/sediment tracked onto public roads","Provide employee parking","Store equipment","Mark the office"],answer:0,
+         expl:"A gravel construction entrance reduces tracking of mud and sediment from the site onto adjacent paved roads.",
+         ref:"VESCH – Std. 3.02 Construction Entrance"},
+        {q:"Virginia's erosion and sediment control program is built around how many minimum standards?",
+         options:["5","12","19","50"],answer:2,
+         expl:"The regulations establish 19 minimum standards that approved E&S plans must address.",
+         ref:"VA E&S Regulations – Minimum Standards"},
+        {q:"A sediment basin or sediment trap functions to:",
+         options:["Detain runoff and let sediment settle out before discharge","Heat the site","Mix concrete","Compact soil"],answer:0,
+         expl:"These impoundments slow runoff and provide detention time so suspended sediment settles before water is released.",
+         ref:"VESCH – Std. 3.13/3.14"},
+        {q:"On a regulated site, E&S controls must be:",
+         options:["Installed once and ignored","Regularly inspected and maintained","Removed during rain","Optional after grading"],answer:1,
+         expl:"Controls must be inspected periodically (and after runoff-producing storms) and maintained in working order.",
+         ref:"VESCH – Minimum Standard / inspections"},
+        {q:"An approved E&S control plan must be obtained:",
+         options:["After the project is finished","Before land-disturbing activity begins","Only if a neighbor complains","Never, if under 5 acres"],answer:1,
+         expl:"Plan approval and a permit must be in place before any regulated land disturbance starts.",
+         ref:"VA E&S Control Law – plan approval"}
+      ]
+    }
+  },
+  ADV: {
+    label: "Advanced (Class A Mandatory)",
+    topics: {
+      "Estimating and Bidding": [
+        {q:"A quantity takeoff is the process of:",
+         options:["Removing items from a job site","Measuring and counting materials/labor needed from the plans","Lowering a bid to win work","Filing taxes"],answer:1,
+         expl:"A takeoff systematically measures and counts the materials, labor, and equipment quantities shown on the drawings.",
+         ref:"NASCLA 11th ed. – Estimating and Bidding"},
+        {q:"If a job costs $10,000 and you want a 20% markup, the price is:",
+         options:["$10,200","$12,000","$12,500","$8,000"],answer:1,
+         expl:"Markup is applied to cost: $10,000 × 1.20 = $12,000. (Note: 20% markup is NOT the same as a 20% margin.)",
+         ref:"NASCLA 11th ed. – Markup vs. Margin"},
+        {q:"Overhead costs are best described as:",
+         options:["Costs tied directly to one specific job","Ongoing business costs (office, insurance, admin) not tied to a single job","Only the cost of materials","Profit"],answer:1,
+         expl:"Overhead (indirect cost) keeps the business running and must be allocated across all jobs; it is separate from direct job costs and profit.",
+         ref:"NASCLA 11th ed. – Overhead and Profit"},
+        {q:"A bid bond primarily guarantees that:",
+         options:["The project will finish on time","The winning bidder will enter the contract and provide required bonds","Subs will be paid","Materials are insured"],answer:1,
+         expl:"A bid bond protects the owner if the low bidder refuses to sign the contract or furnish performance/payment bonds.",
+         ref:"NASCLA 11th ed. – Bonds / Bidding"},
+        {q:"Including a contingency in an estimate is meant to cover:",
+         options:["Guaranteed profit","Unknowns and unexpected cost risks","The owner's financing","Sales tax only"],answer:1,
+         expl:"A contingency is an allowance for uncertainty, unforeseen conditions, and minor scope changes.",
+         ref:"NASCLA 11th ed. – Estimating"},
+        {q:"Which is an example of a DIRECT cost?",
+         options:["Office rent","Lumber installed in the project","Owner's salary","General liability insurance"],answer:1,
+         expl:"Direct costs (labor, materials, equipment for the specific job) can be tied to a single project; office rent and insurance are indirect/overhead.",
+         ref:"NASCLA 11th ed. – Cost Types"},
+        {q:"A unit-price contract is most useful when:",
+         options:["Exact quantities are unknown at bid time","The scope never changes","There is no design","Only one trade is involved"],answer:0,
+         expl:"Unit pricing lets the owner pay per measured unit (e.g., per cubic yard) when total quantities can't be fixed up front.",
+         ref:"NASCLA 11th ed. – Contract/Bid Types"},
+        {q:"A detailed estimate differs from a rough (preliminary) estimate because it:",
+         options:["Is always lower","Is based on a full takeoff and priced line items","Ignores labor","Is done before plans exist"],answer:1,
+         expl:"A detailed estimate prices each item from a complete takeoff, giving far more accuracy than a rough/conceptual estimate.",
+         ref:"NASCLA 11th ed. – Estimate Types"},
+        {q:"Labor productivity (labor units) in estimating refers to:",
+         options:["The number of employees","How much work a worker completes in a unit of time","The total payroll","The overtime rate"],answer:1,
+         expl:"Productivity rates (e.g., man-hours per unit) convert quantities into estimated labor hours and cost.",
+         ref:"NASCLA 11th ed. – Labor Estimating"},
+        {q:"'Unbalancing' a bid by shifting cost into early-paid items is risky because it:",
+         options:["Always increases profit safely","Can be considered improper and create cash/contract problems","Lowers your taxes","Is required by law"],answer:1,
+         expl:"Front-loading or unbalanced bidding can improve early cash flow but may be viewed as deceptive and is restricted on many projects.",
+         ref:"NASCLA 11th ed. – Bidding strategy"},
+        {q:"HARDER: A job will cost you $9,000. To earn a 25% gross margin, what must you charge?",
+         options:["$11,250","$12,000","$11,700","$13,500"],answer:1,
+         expl:"Margin is figured on PRICE, not cost. Price = cost ÷ (1 − margin) = 9,000 ÷ 0.75 = $12,000. (A 25% markup on cost would only be $11,250 — that's the classic trap.)",
+         ref:"NASCLA 11th ed. – Markup vs. Margin"},
+        {q:"HARDER: You charge $15,000 for a job that cost you $12,000. What is your gross margin?",
+         options:["25%","20%","12%","33%"],answer:1,
+         expl:"Margin = profit ÷ price = (15,000 − 12,000) ÷ 15,000 = 3,000 ÷ 15,000 = 20%.",
+         ref:"NASCLA 11th ed. – Markup vs. Margin"},
+        {q:"HARDER: A 33.3% markup applied to cost is equal to what gross margin?",
+         options:["33.3%","30%","25%","20%"],answer:2,
+         expl:"Margin = markup ÷ (1 + markup) = 0.333 ÷ 1.333 = 25%. Markup and margin are never the same number.",
+         ref:"NASCLA 11th ed. – Markup vs. Margin"},
+        {q:"HARDER: Annual overhead is $120,000 and you expect $600,000 of direct job costs this year. What overhead rate should you add to each job's direct cost?",
+         options:["10%","20%","12%","5%"],answer:1,
+         expl:"Overhead recovery rate = overhead ÷ direct costs = 120,000 ÷ 600,000 = 20%. So a $10,000-cost job carries about $2,000 of overhead before profit.",
+         ref:"NASCLA 11th ed. – Overhead Allocation"},
+        {q:"HARDER: Your bare estimate is $80,000 and you add a 5% contingency. What is the estimated total?",
+         options:["$80,500","$84,000","$85,000","$88,000"],answer:1,
+         expl:"Contingency = 80,000 × 0.05 = $4,000, so total = $84,000.",
+         ref:"NASCLA 11th ed. – Estimating / Contingency"},
+        {q:"HARDER: On a unit-price job, you place 250 cubic yards of concrete at a unit price of $145/cy. What do you bill for that item?",
+         options:["$32,250","$36,250","$3,625","$362,500"],answer:1,
+         expl:"Unit price × quantity = 145 × 250 = $36,250. Unit-price contracts pay by measured quantity actually installed.",
+         ref:"NASCLA 11th ed. – Unit-Price Contracts"}
+      ],
+      "Contract Management": [
+        {q:"Which is NOT one of the essential elements of a valid contract?",
+         options:["Offer and acceptance","Consideration","A notarized photograph","Legal purpose and capable parties"],answer:2,
+         expl:"A valid contract needs offer, acceptance, consideration, capacity, and a lawful purpose — not a notarized photo.",
+         ref:"NASCLA 11th ed. – Contract Law / Essentials"},
+        {q:"'Consideration' in a contract means:",
+         options:["Being polite","Something of value exchanged by each party","A waiting period","A written signature"],answer:1,
+         expl:"Consideration is the bargained-for exchange of value (money for work, for example) that binds the parties.",
+         ref:"NASCLA 11th ed. – Contract Elements"},
+        {q:"A change order is used to:",
+         options:["Cancel the project","Document an agreed modification to scope, price, or schedule","Hire employees","Pay taxes"],answer:1,
+         expl:"A change order is a written, signed amendment adjusting the work, contract price, and/or time.",
+         ref:"NASCLA 11th ed. – Change Orders"},
+        {q:"Under the Statute of Frauds, certain contracts must be:",
+         options:["Oral only","In writing to be enforceable","Notarized by a judge","Approved by the Board"],answer:1,
+         expl:"The Statute of Frauds requires certain contracts (e.g., those that can't be performed within a year, or for real property) to be written.",
+         ref:"NASCLA 11th ed. – Statute of Frauds"},
+        {q:"A liquidated damages clause sets:",
+         options:["A bonus for early finish","A pre-agreed dollar amount owed for each day of late completion","The retainage percentage","The tax rate"],answer:1,
+         expl:"Liquidated damages fix, in advance, the damages the contractor owes for failing to finish on time.",
+         ref:"NASCLA 11th ed. – Contract Clauses"},
+        {q:"In a cost-plus contract, the contractor is paid:",
+         options:["A fixed lump sum no matter the cost","Actual costs plus an agreed fee or percentage","Only for materials","Nothing until completion"],answer:1,
+         expl:"Cost-plus reimburses actual project costs plus a negotiated fee (fixed or percentage) for overhead and profit.",
+         ref:"NASCLA 11th ed. – Contract Types"},
+        {q:"A material breach of contract entitles the non-breaching party to:",
+         options:["Nothing","Remedies such as damages or, in some cases, termination","A free change order","An automatic license upgrade"],answer:1,
+         expl:"A material breach can give rise to damages and may justify suspending or terminating the contract.",
+         ref:"NASCLA 11th ed. – Breach and Remedies"},
+        {q:"A 'notice to proceed' tells the contractor:",
+         options:["To stop work","The official date to begin work","To file a lien","To submit a bid"],answer:1,
+         expl:"The notice to proceed establishes the start date from which contract time is often measured.",
+         ref:"NASCLA 11th ed. – Contract Administration"},
+        {q:"An express contract differs from an implied contract because it is:",
+         options:["Never written","Stated explicitly in words (oral or written)","Always illegal","Only used by owners"],answer:1,
+         expl:"An express contract's terms are openly stated; an implied contract is inferred from the parties' conduct.",
+         ref:"NASCLA 11th ed. – Types of Contracts"},
+        {q:"A contract warranty is best described as:",
+         options:["A promise about the quality/performance of the work or materials","A type of insurance policy","A building permit","A lien waiver"],answer:0,
+         expl:"A warranty is a guarantee that the work or product meets a defined standard for a set period.",
+         ref:"NASCLA 11th ed. – Warranties"}
+      ],
+      "Project Management": [
+        {q:"The critical path in a CPM schedule is:",
+         options:["The shortest task on the job","The longest sequence of dependent tasks that sets the project duration","The cheapest activities","The list of subcontractors"],answer:1,
+         expl:"The critical path is the longest chain of dependent activities; any delay on it delays the whole project.",
+         ref:"NASCLA 11th ed. – Scheduling / CPM"},
+        {q:"'Float' (slack) on a schedule activity is:",
+         options:["Money set aside","The time an activity can slip without delaying the project","A safety device","The profit margin"],answer:1,
+         expl:"Float is the amount of time a non-critical activity can be delayed before it affects the finish date. Critical-path tasks have zero float.",
+         ref:"NASCLA 11th ed. – Scheduling"},
+        {q:"A submittal is:",
+         options:["A payment request","Shop drawings, product data, or samples submitted for approval before installation","A final invoice","A lien notice"],answer:1,
+         expl:"Submittals let the designer verify that proposed products/details conform to the contract before they are installed.",
+         ref:"NASCLA 11th ed. – Submittals"},
+        {q:"An RFI (Request for Information) is used to:",
+         options:["Order materials","Get clarification on plans/specs from the designer","Pay a subcontractor","Fire a worker"],answer:1,
+         expl:"An RFI formally asks the architect/engineer to clarify or resolve an ambiguity in the documents.",
+         ref:"NASCLA 11th ed. – Project Documentation"},
+        {q:"A punch list is created:",
+         options:["At the start of a job","Near completion, listing remaining items to fix before final acceptance","To order concrete","To schedule payroll"],answer:1,
+         expl:"The punch list itemizes incomplete or deficient work that must be corrected before final payment/acceptance.",
+         ref:"NASCLA 11th ed. – Project Closeout"},
+        {q:"A bar chart (Gantt) schedule is valued because it:",
+         options:["Hides the schedule","Shows activities and their durations visually over time","Replaces the contract","Calculates taxes"],answer:1,
+         expl:"Gantt/bar charts display each activity as a bar across a timeline, making the plan easy to read.",
+         ref:"NASCLA 11th ed. – Scheduling Tools"},
+        {q:"Keeping daily job reports primarily helps by:",
+         options:["Reducing material cost","Documenting work, weather, manpower, and events for the record","Paying taxes","Setting the bid"],answer:1,
+         expl:"Daily reports create a contemporaneous record that supports claims, disputes, and progress tracking.",
+         ref:"NASCLA 11th ed. – Documentation"},
+        {q:"A preconstruction meeting is held to:",
+         options:["Celebrate completion","Align owner, contractor, and subs on roles, schedule, and procedures before work starts","Pay the punch list","File a lien"],answer:1,
+         expl:"The preconstruction meeting establishes communication, responsibilities, and procedures up front.",
+         ref:"NASCLA 11th ed. – Project Management"},
+        {q:"Resource leveling is used to:",
+         options:["Smooth out manpower/equipment demand to avoid peaks and valleys","Pour level concrete","Lower the contract price","Inspect electrical"],answer:0,
+         expl:"Resource leveling adjusts scheduling to balance the use of labor and equipment over the project.",
+         ref:"NASCLA 11th ed. – Scheduling"},
+        {q:"Closeout documents typically include:",
+         options:["As-builts, warranties, and operation/maintenance manuals","Only the bid","Just the permit","A new estimate"],answer:0,
+         expl:"Project closeout delivers as-built drawings, warranties, O&M manuals, and lien releases to the owner.",
+         ref:"NASCLA 11th ed. – Project Closeout"}
+      ],
+      "Risk Management": [
+        {q:"Workers' compensation insurance primarily covers:",
+         options:["Damage to the building","Employee job-related injuries and illnesses","The owner's financing","Material theft"],answer:1,
+         expl:"Workers' comp pays medical costs and lost wages for employees injured on the job, generally regardless of fault.",
+         ref:"NASCLA 11th ed. – Insurance / Risk Management"},
+        {q:"A key difference between insurance and a surety bond is that a bond involves:",
+         options:["Two parties","Three parties (principal, obligee, surety)","No money","Only the government"],answer:1,
+         expl:"Insurance is a two-party risk-spreading contract; a surety bond is a three-party guarantee that the principal will perform for the obligee.",
+         ref:"NASCLA 11th ed. – Bonds vs. Insurance"},
+        {q:"Builder's risk insurance covers:",
+         options:["Completed buildings only","Property/structure under construction against loss like fire or wind","Employee injuries","Vehicle accidents"],answer:1,
+         expl:"Builder's risk protects the project (materials and work in place) during construction.",
+         ref:"NASCLA 11th ed. – Insurance Types"},
+        {q:"A performance bond protects the owner by guaranteeing:",
+         options:["The contractor will complete the work per the contract","The lowest price","Free materials","Employee wages"],answer:0,
+         expl:"If the contractor defaults, the performance bond's surety ensures the project is completed.",
+         ref:"NASCLA 11th ed. – Surety Bonds"},
+        {q:"A payment bond guarantees that:",
+         options:["The owner pays taxes","Subcontractors and suppliers will be paid","The job finishes early","The bid is lowest"],answer:1,
+         expl:"A payment bond assures that subs and material suppliers get paid, protecting the owner from liens.",
+         ref:"NASCLA 11th ed. – Surety Bonds"},
+        {q:"A hold-harmless (indemnification) clause is a tool to:",
+         options:["Increase profit","Transfer certain risks/liability from one party to another","Lower taxes","Speed the schedule"],answer:1,
+         expl:"Indemnification shifts responsibility for specified losses or claims to another party by contract.",
+         ref:"NASCLA 11th ed. – Risk Transfer"},
+        {q:"A certificate of insurance is used to:",
+         options:["Prove a party carries required coverage","Pay a claim","Replace a contract","Order materials"],answer:0,
+         expl:"A COI is documentation that a contractor/sub carries the insurance the contract requires.",
+         ref:"NASCLA 11th ed. – Insurance Administration"},
+        {q:"A higher insurance deductible generally results in:",
+         options:["A higher premium","A lower premium but more out-of-pocket per claim","No effect","Free coverage"],answer:1,
+         expl:"Choosing a larger deductible lowers premium cost but increases what you pay yourself on each claim.",
+         ref:"NASCLA 11th ed. – Insurance Basics"},
+        {q:"General liability insurance mainly protects against claims of:",
+         options:["Employee injury","Third-party bodily injury or property damage caused by your operations","Late completion","Tax penalties"],answer:1,
+         expl:"GL covers bodily injury and property damage to third parties arising from the contractor's work or premises.",
+         ref:"NASCLA 11th ed. – Liability Insurance"},
+        {q:"The four common ways to handle risk are to avoid, reduce, retain, or:",
+         options:["Ignore it","Transfer it (e.g., via insurance or contract)","Multiply it","Tax it"],answer:1,
+         expl:"Risk management options are avoidance, reduction/control, retention, and transfer.",
+         ref:"NASCLA 11th ed. – Risk Management Strategy"}
+      ],
+      "Safety": [
+        {q:"OSHA's General Duty Clause requires employers to:",
+         options:["Provide free lunch","Furnish a workplace free from recognized serious hazards","Pay overtime","Buy insurance"],answer:1,
+         expl:"The General Duty Clause obligates employers to keep the workplace free of recognized hazards likely to cause death or serious harm.",
+         ref:"NASCLA 11th ed. – OSHA / Safety; OSH Act §5(a)(1)"},
+        {q:"In construction, fall protection is generally required at heights of:",
+         options:["4 feet","6 feet","10 feet","20 feet"],answer:1,
+         expl:"OSHA construction standards generally require fall protection at 6 feet above a lower level.",
+         ref:"NASCLA 11th ed. – Fall Protection; 29 CFR 1926.501"},
+        {q:"A work-related fatality must be reported to OSHA within:",
+         options:["8 hours","24 hours","48 hours","7 days"],answer:0,
+         expl:"Employers must report a fatality within 8 hours; in-patient hospitalizations, amputations, or loss of an eye within 24 hours.",
+         ref:"NASCLA 11th ed. – OSHA Reporting; 29 CFR 1904.39"},
+        {q:"A trench generally requires a protective system (sloping, shoring, or shielding) at a depth of:",
+         options:["2 feet","5 feet","12 feet","20 feet"],answer:1,
+         expl:"Excavations 5 feet or deeper generally require a protective system unless made entirely in stable rock.",
+         ref:"NASCLA 11th ed. – Excavation; 29 CFR 1926.652"},
+        {q:"The OSHA 'Focus Four' construction hazards are falls, struck-by, electrocution, and:",
+         options:["Caught-in/between","Sunburn","Boredom","Noise only"],answer:0,
+         expl:"The Focus Four (leading causes of construction deaths) are falls, struck-by, caught-in/between, and electrocution.",
+         ref:"NASCLA 11th ed. – Construction Hazards"},
+        {q:"A Safety Data Sheet (SDS) provides:",
+         options:["The job schedule","Hazard, handling, and emergency info for a chemical product","The bid amount","Tax tables"],answer:1,
+         expl:"Under Hazard Communication, an SDS supplies safety and handling information for each hazardous chemical on site.",
+         ref:"NASCLA 11th ed. – Hazard Communication"},
+        {q:"A 'competent person' under OSHA is someone who:",
+         options:["Owns the company","Can identify hazards and is authorized to take prompt corrective action","Has the most seniority","Holds a college degree"],answer:1,
+         expl:"A competent person is capable of identifying hazards and has authority to correct them.",
+         ref:"NASCLA 11th ed. – OSHA Definitions"},
+        {q:"PPE (personal protective equipment) should be used:",
+         options:["Instead of all other controls","As protection when hazards can't be fully eliminated by other controls","Only on weekends","Never on small jobs"],answer:1,
+         expl:"PPE is the last line of defense, used when engineering and administrative controls can't remove the hazard.",
+         ref:"NASCLA 11th ed. – PPE"},
+        {q:"The OSHA 300 Log is used to:",
+         options:["Schedule work","Record work-related injuries and illnesses","Order PPE","Track payroll"],answer:1,
+         expl:"Covered employers record recordable work-related injuries and illnesses on the OSHA 300 Log.",
+         ref:"NASCLA 11th ed. – Recordkeeping; 29 CFR 1904"},
+        {q:"Most fatal construction injuries are caused by:",
+         options:["Falls","Paperwork","Meetings","Noise"],answer:0,
+         expl:"Falls are consistently the leading cause of death in construction, which is why fall protection is heavily regulated.",
+         ref:"NASCLA 11th ed. – Safety Statistics"}
+      ],
+      "Labor Laws": [
+        {q:"The Fair Labor Standards Act (FLSA) sets rules for:",
+         options:["Building permits","Minimum wage, overtime, and child labor","Sales tax","Zoning"],answer:1,
+         expl:"FLSA governs federal minimum wage, overtime pay, recordkeeping, and child-labor standards.",
+         ref:"NASCLA 11th ed. – Labor Laws / FLSA"},
+        {q:"Under the FLSA, non-exempt employees must receive overtime pay at what rate after 40 hours in a workweek?",
+         options:["Straight time","1.5 times the regular rate","2 times the regular rate","No extra pay"],answer:1,
+         expl:"Overtime is one-and-one-half times the regular rate for hours over 40 in a workweek.",
+         ref:"NASCLA 11th ed. – Overtime / FLSA"},
+        {q:"The Davis-Bacon Act requires payment of:",
+         options:["Prevailing wages on certain federally funded construction","Double pay always","Cash only","No benefits"],answer:0,
+         expl:"Davis-Bacon requires prevailing wages and fringe benefits on covered federal/federally assisted construction.",
+         ref:"NASCLA 11th ed. – Davis-Bacon"},
+        {q:"Form I-9 is used to:",
+         options:["Report income tax","Verify an employee's identity and eligibility to work in the U.S.","Apply for a permit","Order materials"],answer:1,
+         expl:"Employers must complete Form I-9 to verify each new hire's identity and authorization to work.",
+         ref:"NASCLA 11th ed. – Employment Eligibility"},
+        {q:"Misclassifying an employee as an independent contractor can lead to:",
+         options:["No consequences","Liability for back taxes, penalties, and wage claims","Automatic license upgrade","Lower insurance"],answer:1,
+         expl:"Worker misclassification exposes the business to unpaid payroll taxes, overtime claims, and penalties.",
+         ref:"NASCLA 11th ed. – Employee vs. Independent Contractor"},
+        {q:"Title VII of the Civil Rights Act prohibits employment discrimination based on:",
+         options:["Job experience","Race, color, religion, sex, or national origin","Tool brand","License class"],answer:1,
+         expl:"Title VII bars discrimination based on race, color, religion, sex, and national origin.",
+         ref:"NASCLA 11th ed. – Anti-Discrimination Laws"},
+        {q:"The key factor in deciding employee vs. independent contractor status is usually:",
+         options:["How much control the business has over the worker","The worker's age","The job location","The weather"],answer:0,
+         expl:"The degree of behavioral and financial control over the worker is central to the classification test.",
+         ref:"NASCLA 11th ed. – Worker Classification"},
+        {q:"Unemployment insurance is generally funded by:",
+         options:["Employee tips","Employer payroll taxes","Building permits","Customer deposits"],answer:1,
+         expl:"Unemployment insurance is primarily funded through employer-paid state and federal payroll taxes.",
+         ref:"NASCLA 11th ed. – Payroll / Unemployment"},
+        {q:"The ADA requires employers to:",
+         options:["Ignore disabilities","Provide reasonable accommodation to qualified individuals with disabilities","Pay double wages","Hire only union labor"],answer:1,
+         expl:"The Americans with Disabilities Act requires reasonable accommodations and prohibits disability discrimination.",
+         ref:"NASCLA 11th ed. – ADA"},
+        {q:"Child labor provisions of the FLSA mainly:",
+         options:["Encourage hiring minors for hazardous work","Restrict the hours and types of work minors may perform","Require minors on every job","Set the minimum wage at zero"],answer:1,
+         expl:"Child-labor rules limit the hours and hazardous tasks minors can legally do.",
+         ref:"NASCLA 11th ed. – Child Labor"}
+      ],
+      "Financial Management": [
+        {q:"The basic accounting equation is:",
+         options:["Assets = Liabilities + Owner's Equity","Assets = Revenue - Expenses","Profit = Sales","Cash = Assets"],answer:0,
+         expl:"The balance sheet is built on Assets = Liabilities + Owner's Equity.",
+         ref:"NASCLA 11th ed. – Financial Management / Balance Sheet"},
+        {q:"A balance sheet reports a company's:",
+         options:["Profit over a year","Financial position (assets, liabilities, equity) at a point in time","Tax return","Daily logs"],answer:1,
+         expl:"The balance sheet is a snapshot of what the business owns and owes at a specific date.",
+         ref:"NASCLA 11th ed. – Financial Statements"},
+        {q:"An income statement (P&L) shows:",
+         options:["Assets at a moment","Revenues and expenses over a period and the resulting profit/loss","Only cash on hand","The owner's net worth"],answer:1,
+         expl:"The income statement summarizes revenue minus expenses to show profit or loss over a period.",
+         ref:"NASCLA 11th ed. – Income Statement"},
+        {q:"The current ratio is calculated as:",
+         options:["Current assets ÷ current liabilities","Sales ÷ profit","Cash ÷ debt","Assets ÷ equity"],answer:0,
+         expl:"Current ratio = current assets ÷ current liabilities; it measures short-term ability to pay obligations.",
+         ref:"NASCLA 11th ed. – Financial Ratios"},
+        {q:"Working capital equals:",
+         options:["Total assets","Current assets minus current liabilities","Revenue minus tax","Equity plus debt"],answer:1,
+         expl:"Working capital (current assets − current liabilities) shows the funds available for day-to-day operations.",
+         ref:"NASCLA 11th ed. – Working Capital"},
+        {q:"Under accrual accounting, revenue is recorded when:",
+         options:["Cash is received","It is earned, regardless of when cash arrives","The job is bid","Taxes are filed"],answer:1,
+         expl:"Accrual accounting recognizes revenue when earned and expenses when incurred, not when cash moves.",
+         ref:"NASCLA 11th ed. – Accounting Methods"},
+        {q:"Job costing is used to:",
+         options:["Track costs and profitability by individual project","Calculate sales tax","Pay employees","Set the minimum wage"],answer:0,
+         expl:"Job costing assigns costs to each project so you can measure each job's profitability.",
+         ref:"NASCLA 11th ed. – Job Costing"},
+        {q:"Retainage withheld by an owner tends to:",
+         options:["Improve the contractor's cash flow","Reduce the contractor's cash flow until released","Lower taxes","Increase the bid"],answer:1,
+         expl:"Retainage holds back a percentage of progress payments, tightening contractor cash flow until final payment.",
+         ref:"NASCLA 11th ed. – Cash Flow / Retainage"},
+        {q:"Depreciation allows a business to:",
+         options:["Spread the cost of an asset over its useful life","Avoid all taxes","Increase cash instantly","Skip recordkeeping"],answer:0,
+         expl:"Depreciation allocates the cost of a long-lived asset across the years it is used.",
+         ref:"NASCLA 11th ed. – Depreciation"},
+        {q:"Accounts receivable represents:",
+         options:["Money the business owes others","Money owed TO the business by customers","Cash in the bank","Equipment value"],answer:1,
+         expl:"Accounts receivable is money customers owe the business for work already billed.",
+         ref:"NASCLA 11th ed. – Financial Management"},
+        {q:"HARDER: Current assets are $150,000 and current liabilities are $100,000. What is the current ratio?",
+         options:["0.67","1.5","2.5","50,000"],answer:1,
+         expl:"Current ratio = current assets ÷ current liabilities = 150,000 ÷ 100,000 = 1.5. A ratio above 1.0 means you can cover short-term debts.",
+         ref:"NASCLA 11th ed. – Financial Ratios"},
+        {q:"HARDER: Using the same numbers ($150,000 current assets, $100,000 current liabilities), what is the working capital?",
+         options:["$250,000","$50,000","$1.50","$100,000"],answer:1,
+         expl:"Working capital = current assets − current liabilities = 150,000 − 100,000 = $50,000 available for operations.",
+         ref:"NASCLA 11th ed. – Working Capital"},
+        {q:"HARDER: A company has a current ratio of 0.8. This most likely signals:",
+         options:["Strong liquidity","Current liabilities exceed current assets — a possible cash/liquidity problem","High profit","No debt"],answer:1,
+         expl:"A current ratio below 1.0 means short-term debts are larger than short-term assets, a warning sign for paying bills on time.",
+         ref:"NASCLA 11th ed. – Financial Ratios"},
+        {q:"HARDER: Revenue is $500,000 and cost of goods sold is $400,000. What is the gross profit and gross margin?",
+         options:["$100,000 / 20%","$100,000 / 25%","$900,000 / 80%","$400,000 / 80%"],answer:0,
+         expl:"Gross profit = 500,000 − 400,000 = $100,000. Gross margin = 100,000 ÷ 500,000 = 20%.",
+         ref:"NASCLA 11th ed. – Income Statement"},
+        {q:"HARDER: On a job, costs incurred to date are $60,000 but you have billed the owner $75,000. The $15,000 'overbilling' is generally shown on the balance sheet as a:",
+         options:["Asset","Liability (billings in excess of costs)","Expense","Revenue"],answer:1,
+         expl:"Billings in excess of costs (overbilling) is a liability — you've been paid for work not yet performed. Underbilling is an asset.",
+         ref:"NASCLA 11th ed. – WIP / Percentage of Completion"}
+      ],
+      "Federal and State Taxes": [
+        {q:"FICA taxes fund:",
+         options:["Building inspections","Social Security and Medicare","State roads","Unemployment only"],answer:1,
+         expl:"FICA covers Social Security and Medicare, split between employee and employer.",
+         ref:"NASCLA 11th ed. – Payroll Taxes / FICA"},
+        {q:"The combined employee FICA rate (Social Security + Medicare) that the employer must match is:",
+         options:["1.45%","6.2%","7.65%","15.3%"],answer:2,
+         expl:"FICA is 6.2% Social Security + 1.45% Medicare = 7.65%, and the employer matches it.",
+         ref:"NASCLA 11th ed. – FICA"},
+        {q:"Self-employment tax (covering both halves of Social Security and Medicare) is approximately:",
+         options:["7.65%","10%","15.3%","25%"],answer:2,
+         expl:"Self-employed individuals pay both the employee and employer shares, about 15.3%.",
+         ref:"NASCLA 11th ed. – Self-Employment Tax"},
+        {q:"A worker who is an employee receives which form at year end?",
+         options:["Form 1099-NEC","Form W-2","Form W-9","Form I-9"],answer:1,
+         expl:"Employees receive a W-2; independent contractors receive a 1099-NEC.",
+         ref:"NASCLA 11th ed. – Payroll Forms"},
+        {q:"Form W-4 is used to:",
+         options:["Report a contractor's payments","Tell the employer how much income tax to withhold from an employee's pay","File the annual return","Apply for an EIN"],answer:1,
+         expl:"Employees complete a W-4 so the employer can determine federal income tax withholding.",
+         ref:"NASCLA 11th ed. – Withholding"},
+        {q:"Form 941 is filed by employers:",
+         options:["Once at startup","Quarterly to report withheld income and FICA taxes","Only when audited","Never"],answer:1,
+         expl:"Form 941 is the quarterly federal payroll tax return reporting withholding and FICA.",
+         ref:"NASCLA 11th ed. – Form 941"},
+        {q:"FUTA is the federal tax for:",
+         options:["Medicare","Unemployment compensation","Sales tax","Property tax"],answer:1,
+         expl:"FUTA (Federal Unemployment Tax Act) funds unemployment compensation and is paid by employers.",
+         ref:"NASCLA 11th ed. – FUTA"},
+        {q:"An EIN (Employer Identification Number) is:",
+         options:["A state contractor license","A federal tax ID number for the business","A building permit","A bank account number"],answer:1,
+         expl:"The IRS issues an EIN to identify a business for federal tax purposes.",
+         ref:"NASCLA 11th ed. – Business Tax IDs"},
+        {q:"A contractor who pays an unincorporated subcontractor $600+ in a year generally must issue a:",
+         options:["W-2","1099-NEC","W-4","Form 941"],answer:1,
+         expl:"Payments of $600 or more to most unincorporated contractors are reported on Form 1099-NEC.",
+         ref:"NASCLA 11th ed. – 1099 Reporting"},
+        {q:"Self-employed contractors typically pay income tax through:",
+         options:["A single year-end payment only","Quarterly estimated tax payments","Their customers","Sales tax returns"],answer:1,
+         expl:"Because no employer withholds for them, self-employed individuals make quarterly estimated tax payments.",
+         ref:"NASCLA 11th ed. – Estimated Taxes"}
+      ],
+      "Lien Laws": [
+        {q:"The main purpose of a mechanic's lien is to:",
+         options:["Penalize the owner","Secure payment for those who furnish labor or materials to improve real property","Cancel the contract","Lower property taxes"],answer:1,
+         expl:"A mechanic's lien gives contractors, subs, and suppliers a security interest in the improved property to help ensure payment.",
+         ref:"NASCLA 11th ed. (VA) – Mechanic's Liens; Code of VA § 43-3"},
+        {q:"Who is generally entitled to file a mechanic's lien?",
+         options:["Only the general contractor","Contractors, subcontractors, laborers, and material suppliers who improved the property","Only the owner","Only the bank"],answer:1,
+         expl:"Those who provide labor or materials toward the improvement of the property may have lien rights.",
+         ref:"NASCLA 11th ed. (VA) – Who May File"},
+        {q:"In Virginia, a memorandum of mechanic's lien must generally be filed within how many days of the last work or material?",
+         options:["30 days","90 days","6 months","1 year"],answer:1,
+         expl:"Virginia requires the lien memorandum be filed within 90 days from the last day of the month in which the last work was done (and within 90 days of completion).",
+         ref:"NASCLA 11th ed. (VA) – Code of VA § 43-4"},
+        {q:"In Virginia, a suit to enforce a perfected mechanic's lien must be started within:",
+         options:["30 days","90 days","6 months","3 years"],answer:2,
+         expl:"Virginia requires enforcement (suit) to begin within 6 months of recording the lien (or 60 days from completion/termination, whichever is later).",
+         ref:"NASCLA 11th ed. (VA) – Code of VA § 43-17"},
+        {q:"A lien waiver is a document in which a party:",
+         options:["Files a new lien","Gives up or releases lien rights, usually in exchange for payment","Buys insurance","Requests a permit"],answer:1,
+         expl:"A lien waiver relinquishes lien rights; it can be conditional (on payment) or unconditional.",
+         ref:"NASCLA 11th ed. – Lien Waivers"},
+        {q:"A conditional lien waiver becomes effective:",
+         options:["Immediately, no matter what","Only once the related payment actually clears","Never","After 10 years"],answer:1,
+         expl:"A conditional waiver only takes effect when the promised payment is actually received/cleared.",
+         ref:"NASCLA 11th ed. – Conditional vs. Unconditional Waivers"},
+        {q:"'Perfecting' a lien means:",
+         options:["Doing perfect work","Completing the legal steps (filing/recording, notice) required to make the lien enforceable","Painting the building","Paying off the loan"],answer:1,
+         expl:"Perfecting a lien requires following the statutory steps — recording and any required notices — within the deadlines.",
+         ref:"NASCLA 11th ed. – Perfecting a Lien"},
+        {q:"A subcontractor's lien rights are generally based on:",
+         options:["The owner's mood","Labor or materials they actually furnished to the project","The weather","Their license class"],answer:1,
+         expl:"Lien rights flow from the value of labor/materials the claimant actually contributed to the improvement.",
+         ref:"NASCLA 11th ed. – Subcontractor Liens"},
+        {q:"Why do owners often require lien waivers with each payment?",
+         options:["To raise the price","To protect against double payment and ensure subs/suppliers are paid","To delay the job","To avoid permits"],answer:1,
+         expl:"Collecting waivers as payments are made protects the owner from liens by parties who have already been paid.",
+         ref:"NASCLA 11th ed. – Payment Process / Waivers"},
+        {q:"A mechanic's lien attaches to:",
+         options:["The contractor's truck","The real property (land/building) that was improved","The owner's bank account","The subcontractor's tools"],answer:1,
+         expl:"The lien is a claim against the improved real property itself, which can ultimately be sold to satisfy the debt.",
+         ref:"NASCLA 11th ed. – Property Subject to Lien"}
+      ]
+    }
+  }
+};
+
+/* ============================================================
+   APP LOGIC
+   ============================================================ */
+let session = null; // {label, qs:[], idx, answers:[], topicName}
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function renderHome(){
+  const va=document.getElementById('vaTopics');
+  const adv=document.getElementById('advTopics');
+  va.innerHTML=''; adv.innerHTML='';
+  for(const [name,qs] of Object.entries(BANK.VA.topics)){
+    va.appendChild(topicBtn('VA',name,qs.length));
+  }
+  for(const [name,qs] of Object.entries(BANK.ADV.topics)){
+    adv.appendChild(topicBtn('ADV',name,qs.length));
+  }
+}
+function topicBtn(portion,name,count){
+  const b=document.createElement('button');
+  b.className='topic';
+  b.innerHTML=`<span>${name}<div class="meta">${count} questions</div></span><span class="chev">&rsaquo;</span>`;
+  b.onclick=()=>startTopic(portion,name);
+  return b;
+}
+
+function startTopic(portion,name){
+  const qs=BANK[portion].topics[name].map((x,i)=>({...x,_t:name}));
+  session={label:name, sub:BANK[portion].label, qs:shuffle([...qs]), idx:0, answers:[]};
+  showQuiz();
+}
+function start(portion){
+  let all=[];
+  for(const [name,qs] of Object.entries(BANK[portion].topics)){
+    qs.forEach(x=>all.push({...x,_t:name}));
+  }
+  session={label:"Full Mock — "+BANK[portion].label, sub:BANK[portion].label, qs:shuffle(all), idx:0, answers:[]};
+  showQuiz();
+}
+
+function showScreen(id){
+  ['home','quiz','results'].forEach(s=>document.getElementById(s).classList.add('hide'));
+  document.getElementById(id).classList.remove('hide');
+  window.scrollTo(0,0);
+}
+function showQuiz(){showScreen('quiz');renderQ();}
+function goHome(){session=null;showScreen('home');}
+
+function renderQ(){
+  const q=session.qs[session.idx];
+  document.getElementById('qLabel').textContent=session.label;
+  document.getElementById('qCount').textContent=`Q ${session.idx+1} / ${session.qs.length}`;
+  document.getElementById('qBar').style.width=`${(session.idx/session.qs.length)*100}%`;
+  document.getElementById('qText').textContent=q.q;
+  const opts=document.getElementById('qOpts');
+  opts.innerHTML='';
+  const labels=['A','B','C','D'];
+  q.options.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="lab">${labels[i]}</span>${o}`;
+    b.onclick=()=>choose(i);
+    opts.appendChild(b);
+  });
+  const fb=document.getElementById('qFeed');
+  fb.className='feedback';
+  document.getElementById('qNext').classList.add('hide');
+  document.getElementById('qNext').textContent = (session.idx===session.qs.length-1)?'See results':'Next';
+}
+
+function choose(i){
+  const q=session.qs[session.idx];
+  const correct=q.answer;
+  const btns=document.querySelectorAll('#qOpts .opt');
+  btns.forEach((b,bi)=>{
+    b.disabled=true;
+    if(bi===correct)b.classList.add('correct');
+    else if(bi===i)b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+  const ok=(i===correct);
+  session.answers.push({q:q.q,picked:i,correct:correct,options:q.options,ok:ok,topic:q._t});
+  const fb=document.getElementById('qFeed');
+  fb.className='feedback show '+(ok?'ok':'no');
+  document.getElementById('qFeedHead').textContent=ok?'✓ Correct':'✗ Not quite';
+  document.getElementById('qFeedExpl').textContent=q.expl;
+  document.getElementById('qFeedRef').innerHTML=`<b>Find it:</b> ${q.ref}`;
+  document.getElementById('qNext').classList.remove('hide');
+  document.getElementById('qBar').style.width=`${((session.idx+1)/session.qs.length)*100}%`;
+}
+
+function next(){
+  if(session.idx<session.qs.length-1){session.idx++;renderQ();}
+  else showResults();
+}
+
+function showResults(){
+  showScreen('results');
+  const total=session.answers.length;
+  const right=session.answers.filter(a=>a.ok).length;
+  const wrong=total-right;
+  const pct=Math.round((right/total)*100);
+  document.getElementById('rPct').textContent=pct+'%';
+  document.getElementById('rRaw').textContent=`${right} of ${total} correct`;
+  document.getElementById('rRight').textContent=right;
+  document.getElementById('rWrong').textContent=wrong;
+  document.getElementById('rTotal').textContent=total;
+  const v=document.getElementById('rVerdict');
+  if(pct>=70){v.className='verdict pass';v.textContent='Passing range — nice work! (70%+)';}
+  else{v.className='verdict fail';v.textContent='Below 70% — drill the misses and run it again.';}
+  const rev=document.getElementById('rReview');
+  rev.innerHTML='';
+  const misses=session.answers.filter(a=>!a.ok);
+  if(misses.length===0){rev.innerHTML='<p style="color:var(--green);font-weight:600;">Perfect score. No misses to review!</p>';}
+  misses.forEach(a=>{
+    const d=document.createElement('div');
+    d.className='reviewq';
+    d.innerHTML=`<div class="qq">${a.q}</div>
+      <div class="yours">Your answer: ${a.options[a.picked]}</div>
+      <div class="right">Correct: ${a.options[a.correct]}</div>`;
+    rev.appendChild(d);
+  });
+}
+
+function retry(){
+  session.qs=shuffle([...session.qs]);
+  session.idx=0;session.answers=[];
+  showQuiz();
+}
+
+renderHome();
+</script>
+</body>
+</html>
