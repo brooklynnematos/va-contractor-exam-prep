@@ -189,7 +189,7 @@
         <tr><td>Passing score</td><td class="num" id="eiPass"></td></tr>
         <tr><td>Format</td><td class="num">Open book</td></tr>
       </table>
-      <p class="badge" style="margin:0 0 14px;">This mirrors the real PSI exam. The timer starts when you tap Begin. You can flag questions and go back to change answers any time before you submit. When the clock hits zero, it submits automatically.</p>
+      <p class="badge" id="eiNote" style="margin:0 0 14px;">This mirrors the real PSI exam. The timer starts when you tap Begin. You can flag questions and go back to change answers any time before you submit. When the clock hits zero, it submits automatically.</p>
       <button class="btn primary" onclick="beginExam()">Begin Exam</button>
       <div style="height:8px;"></div>
       <button class="btn ghost" onclick="goHome()">Back to menu</button>
@@ -4097,14 +4097,14 @@ function startTopic(portion,name){
 }
 /* ---- Real exam blueprints (matches the official PSI content outline) ---- */
 const EXAM = {
-  VA: {title:"Virginia Portion (Rules & Regulations)", time:48*60, pass:18,
+  VA: {title:"Virginia Portion (Rules & Regulations)", time:48*60, pass:18, pretest:6,
     blueprint:{
       "Regulation of Contractors":7,
       "Board Rules and Regulations":5,
       "Building Codes":5,
       "Transaction Recovery Fund":5,
       "Virginia Erosion and Sediment Control Regulations":2}},
-  ADV: {title:"Advanced Portion", time:60*60, pass:17,
+  ADV: {title:"Advanced Portion", time:60*60, pass:17, pretest:6,
     blueprint:{
       "Estimating and Bidding":1,
       "Contract Management":4,
@@ -4136,25 +4136,39 @@ function pickN(arr,n){return shuffle([...arr]).slice(0,n);}
 
 function examIntro(portion){
   const cfg=EXAM[portion];
-  const total=Object.values(cfg.blueprint).reduce((a,b)=>a+b,0);
+  const scored=Object.values(cfg.blueprint).reduce((a,b)=>a+b,0);
+  const pre=cfg.pretest||0, shown=scored+pre;
+  const perQ=cfg.time/scored;
+  const totalMin=Math.round((cfg.time+pre*perQ)/60);
   document.getElementById('eiPortion').textContent=BANK[portion].label;
   document.getElementById('eiTitle').textContent=cfg.title;
-  document.getElementById('eiQ').textContent=total;
-  document.getElementById('eiTime').textContent=(cfg.time/60)+' minutes';
-  document.getElementById('eiPass').textContent=cfg.pass+' / '+total;
+  document.getElementById('eiQ').innerHTML=shown+(pre?' <span style="font-weight:400;color:var(--muted)">('+scored+' scored)</span>':'');
+  document.getElementById('eiTime').textContent=totalMin+' minutes';
+  document.getElementById('eiPass').textContent=cfg.pass+' / '+scored;
+  document.getElementById('eiNote').innerHTML='This mirrors the real PSI exam, which mixes in '+pre+' unscored “pretest” questions on top of the '+scored+' that count, so you’ll see '+shown+' total (just like the real thing). You can’t tell which is which, so answer them all. Only the '+scored+' scored questions decide pass/fail. Timer starts when you tap Begin; flag and revisit anytime before you submit.';
   pendingPortion=portion;
   showScreen('examIntro');
 }
 
 function beginExam(){
   const portion=pendingPortion, cfg=EXAM[portion];
-  let qs=[];
+  let qs=[]; const used=new Set();
   for(const [topic,n] of Object.entries(cfg.blueprint)){
-    pickN(BANK[portion].topics[topic],n).forEach(q=>qs.push(shuffleChoices({...q,_t:topic})));
+    pickN(BANK[portion].topics[topic],n).forEach(q=>{used.add(q.q);qs.push(shuffleChoices({...q,_t:topic,_sc:true}));});
+  }
+  const scoredTotal=qs.length;
+  // unscored "pretest" items drawn from the rest of the pool, like the real exam
+  const pre=cfg.pretest||0;
+  if(pre>0){
+    const leftover=[];
+    for(const [topic,arr] of Object.entries(BANK[portion].topics))
+      arr.forEach(q=>{if(!used.has(q.q))leftover.push({q,topic});});
+    pickN(leftover,pre).forEach(x=>qs.push(shuffleChoices({...x.q,_t:x.topic,_sc:false})));
   }
   qs=shuffle(qs);
-  exam={portion, cfg, qs, picks:new Array(qs.length).fill(null),
-        flags:new Array(qs.length).fill(false), idx:0, timeLeft:cfg.time, timerId:null};
+  const timeLeft=Math.round(cfg.time + pre*(cfg.time/scoredTotal));
+  exam={portion, cfg, qs, scoredTotal, picks:new Array(qs.length).fill(null),
+        flags:new Array(qs.length).fill(false), idx:0, timeLeft, timerId:null};
   showScreen('exam');
   renderExamQ();
   updateTimer();
@@ -4226,15 +4240,18 @@ function showExamResults(auto){
   // preserve blueprint order for the report
   Object.keys(exam.cfg.blueprint).forEach(t=>byTopic[t]={n:0,c:0});
   exam.qs.forEach((q,i)=>{
+    if(q._sc===false)return; // unscored pretest item — does not count
     byTopic[q._t].n++;
     if(exam.picks[i]===q.answer){correct++;byTopic[q._t].c++;}
   });
-  const total=exam.qs.length, pass=correct>=exam.cfg.pass, pct=Math.round(correct/total*100);
+  const total=exam.scoredTotal!=null?exam.scoredTotal:exam.qs.length;
+  const pre=exam.qs.length-total;
+  const pass=correct>=exam.cfg.pass, pct=Math.round(correct/total*100);
   const v=document.getElementById('erVerdict');
   v.className='verdict '+(pass?'pass':'fail');
   v.textContent=pass?'PASS':'FAIL';
   document.getElementById('erScore').textContent=correct+' / '+total;
-  document.getElementById('erSub').innerHTML=pct+'% &middot; need '+exam.cfg.pass+' to pass'+(auto?' &middot; <b>time expired</b>':'');
+  document.getElementById('erSub').innerHTML=pct+'% of scored &middot; need '+exam.cfg.pass+' to pass'+(pre>0?' &middot; '+pre+' unscored items excluded':'')+(auto?' &middot; <b>time expired</b>':'');
   const tbl=document.getElementById('erTable');
   tbl.innerHTML='<tr><th>Topic</th><th class="num"># Q</th><th class="num"># Correct</th></tr>';
   for(const [t,d] of Object.entries(byTopic)){
@@ -4259,7 +4276,7 @@ function reviewExam(){
   exam.qs.forEach((q,i)=>{
     const picked=exam.picks[i], ok=picked===q.answer;
     const d=document.createElement('div'); d.className='reviewq';
-    d.innerHTML='<div class="qq">'+(i+1)+'. '+q.q+'</div>'+
+    d.innerHTML='<div class="qq">'+(i+1)+'. '+q.q+(q._sc===false?' <span style="font-size:11px;font-weight:700;color:#b9791a;background:#fff8ea;border:1px solid #f0dca8;border-radius:10px;padding:1px 7px;">unscored pretest</span>':'')+'</div>'+
       '<div class="'+(ok?'right':'yours')+'">Your answer: '+(picked!=null?labels[picked]+'. '+q.options[picked]:'(blank)')+' '+(ok?'✓':'✗')+'</div>'+
       (ok?'':'<div class="right">Correct: '+labels[q.answer]+'. '+q.options[q.answer]+'</div>')+
       '<div class="ref" style="margin-top:6px;"><b>Find it:</b> '+q.ref+' &middot; '+q.expl+'</div>';
